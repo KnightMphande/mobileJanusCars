@@ -1,16 +1,21 @@
 import { Image, Text, View } from "react-native";
 import { styles } from "./styles";
 import Button from "../../../components/Button";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-export default function Splash() {
+export default function Splash({ navigation }) {
 
-    const handlePress = () => {
-        console.log("Button clicked.");
-        
+    const handleSignup = () => {
+        navigation.navigate('Signup')        
+    }
+
+    const handleSignin = () => {
+        navigation.navigate('Signin')        
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaProvider>
+                    <View style={styles.container}>
             <Image resizeMode="contain" style={styles.image} source={require('../../../assets/car_keys.png')} />
 
             <View style={styles.containerTitle}>
@@ -18,8 +23,9 @@ export default function Splash() {
                 <Text style={[styles.title, styles.highlight]}>Drive</Text>
             </View>
 
-            <Button onPress={handlePress} title="Signup" />
-            <Button onPress={handlePress} title="Signin" />
+            <Button onPress={handleSignup} title="Signup" />
+            <Button onPress={handleSignin} title="Signin" />
         </View>
+        </SafeAreaProvider>
     );
 }
