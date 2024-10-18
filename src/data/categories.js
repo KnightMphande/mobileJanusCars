@@ -4,15 +4,15 @@ export const categories = [
         category: "SUV"
     },
     {
-        id: 1,
+        id: 2,
         category: "Sedan"
     },
     {
-        id: 1,
+        id: 3,
         category: "Luxury"
     },
     {
-        id: 1,
+        id: 4,
         category: "Economy"
     },
 ]
