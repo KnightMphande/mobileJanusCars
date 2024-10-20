@@ -3,7 +3,7 @@ import { styles } from "./styles";
 import Button from "../../../components/Button";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-export default function Splash({ navigation }) {
+export default function Splash({ navigation }) {    
 
     const handleSignup = () => {
         navigation.navigate('Signup')        

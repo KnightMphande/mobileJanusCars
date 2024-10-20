@@ -1,49 +1,34 @@
 // src/App.js
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AuthProvider, AuthContext } from './src/context/AuthContext';
 import Splash from './src/screens/auth/Splash';
 import Signup from './src/screens/auth/Signup';
 import Signin from './src/screens/auth/Signin';
-import AppTabs from './src/navigation/AppTabs'; 
+import Profile from './src/screens/app/Profile';
 
 const Stack = createNativeStackNavigator();
 
-function AppNavigator() {
-    const { authToken, isLoading } = useContext(AuthContext);
+export const UserContext = React.createContext();
 
-    // Show splash screen while checking auth status
-    if (isLoading) {
-        return <Splash />;
-    }
-
-    return (
-        <Stack.Navigator initialRouteName="Splash">
-            {authToken ? (
-                // User is logged in
-                <Stack.Screen name="AppTabs" component={AppTabs} options={{ headerShown: false }} />
-            ) : (
-                // User is not logged in
-                <>
-                    <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
-                    <Stack.Screen name="Signup" component={Signup} options={{ title: 'Sign Up', headerShown: false }} />
-                    <Stack.Screen name="Signin" component={Signin} options={{ title: 'Sign In', headerShown: false }} />
-                </>
-            )}
-        </Stack.Navigator>
-    );
-}
 
 export default function App() {
+    const [user, setUser] = useState();
+
     return (
         <SafeAreaProvider>
-            <AuthProvider>
+            <UserContext.Provider value={{ user, setUser }}>
                 <NavigationContainer>
-                    <AppNavigator />
+                    <Stack.Navigator initialRouteName="Splash">
+                        <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+                        <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
+                        <Stack.Screen name="Signup" component={Signup} options={{ title: 'Sign Up', headerShown: false }} />
+                        <Stack.Screen name="Signin" component={Signin} options={{ title: 'Sign In', headerShown: false }} />
+                    </Stack.Navigator>
                 </NavigationContainer>
-            </AuthProvider>
+            </UserContext.Provider>
+
         </SafeAreaProvider>
     );
 }

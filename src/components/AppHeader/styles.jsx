@@ -23,11 +23,19 @@ export const styles = StyleSheet.create({
         color: colors.mediumGreen,
         fontSize: 26,
         fontWeight: '500',
-        paddingHorizontal: 16
     },
 
-    menu: {
-        width: 50,
+    signoutContainer: {
+        backgroundColor: colors.red, 
+        paddingVertical: 6,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-
+    signoutText: {
+        color: colors.light, 
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 })

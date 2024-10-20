@@ -21,4 +21,48 @@ export const styles = StyleSheet.create({
         marginVertical: 10,
         borderRadius: 5,
     },
+
+    title: {
+        textAlign: 'center',
+        marginTop: 3
+    },
+
+    alignLeft: {
+        textAlign: 'left'
+    },
+
+    titleText: {
+        fontWeight: '600'
+    },
+
+    tabContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginVertical: 20,
+    },
+    
+    activeTab: {
+        borderBottomWidth: 2,
+        borderBottomColor: '#16a34a', // Active tab color
+        padding: 10,
+    },
+    
+    inactiveTab: {
+        padding: 10,
+    },
+    
+    tabText: {
+        fontSize: 16,
+    },
+    
+    tabContent: {
+        padding: 0,
+    },
+    
+    tabTitle: {
+        fontSize: 18,
+        marginVertical: 10,
+        fontWeight: 'bold',
+    },
+    
 });

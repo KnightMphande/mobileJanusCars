@@ -3,5 +3,6 @@ export const colors = {
     light: '#fff',
     lightGreen: '#16a34a',
     mediumGreen: '#15803d',
-    dakGreen: '#166534'
+    dakGreen: '#166534',
+    red: '#e53935'
 };
