@@ -23,22 +23,31 @@ export default function Signin({ navigation }) {
 
     const handleSignin = async () => {
 
-        setLoading(true); 
-        try {  
+        setLoading(true);
+        try {
             const response = await axios.post(
                 'http://10.242.154.96:5000/api/auth/signin', // local ip address
-                { email, password },  
-                { withCredentials: true }  
-            );            
+                { email, password },
+                { withCredentials: true }
+            );
 
             const data = response.data;
 
-            if(data.success) {
+            if (data.success) {
                 // console.log(data);
                 setUser(data?.user);
-                Alert.alert('Success', 'You have signed in successfully');
-                navigation.navigate('Profile'); 
-            } else if(!data.success) {
+
+                if (data?.user?.role === "employee" || data?.user?.role === "admin") {
+                    navigation.navigate('Bookings');
+                    Alert.alert('Success', 'You have signed in successfully');
+                } else if (data?.user?.role === "customer") {
+                    navigation.navigate('Profile');
+                    Alert.alert('Success', 'You have signed in successfully');
+                }
+
+
+
+            } else if (!data.success) {
                 Alert.alert(data.error);
             }
 

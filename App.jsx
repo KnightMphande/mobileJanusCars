@@ -7,6 +7,7 @@ import Splash from './src/screens/auth/Splash';
 import Signup from './src/screens/auth/Signup';
 import Signin from './src/screens/auth/Signin';
 import Profile from './src/screens/app/Profile';
+import Bookings from './src/screens/app/Booking';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
                         <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
                         <Stack.Screen name="Signup" component={Signup} options={{ title: 'Sign Up', headerShown: false }} />
                         <Stack.Screen name="Signin" component={Signin} options={{ title: 'Sign In', headerShown: false }} />
+                        <Stack.Screen name="Bookings" component={Bookings} options={{ title: 'Bookings', headerShown: false }} />
                     </Stack.Navigator>
                 </NavigationContainer>
             </UserContext.Provider>

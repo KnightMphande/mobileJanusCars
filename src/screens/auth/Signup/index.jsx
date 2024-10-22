@@ -3,9 +3,10 @@ import { ScrollView, View, Alert, ActivityIndicator, SafeAreaView } from 'react-
 import Button from '../../../components/Button';
 import AuthHeader from '../../../components/AuthHeader';
 import Input from '../../../components/Input';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import axios from "axios";
-import { styles } from "./styles";
+import axios from 'axios';
+import { styles } from './styles';
 
 export default function Signup({ navigation }) {
     const [formData, setFormData] = useState({
@@ -20,9 +21,11 @@ export default function Signup({ navigation }) {
         zipCode: '',
         country: '',
         licenseNumber: '',
-        issueDate: '',
-        expiryDate: ''
     });
+    const [issueDate, setIssueDate] = useState();
+    const [expiryDate, setExpiryDate] = useState();
+    const [isIssueDatePickerVisible, setIssueDatePickerVisibility] = useState(false);
+    const [isExpiryDatePickerVisible, setExpiryDatePickerVisibility] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleBackPress = () => {
@@ -35,11 +38,10 @@ export default function Signup({ navigation }) {
 
     const handleSignup = async () => {
         setLoading(true);
-        console.log(formData);
-        
+
         try {
             const response = await axios.post(
-                'http://10.242.154.96:5000/api/auth/signup', // local IP address
+                'http://10.242.154.96:5000/api/auth/signup', 
                 formData,
                 { withCredentials: true }
             );
@@ -48,7 +50,7 @@ export default function Signup({ navigation }) {
 
             if (data.success) {
                 Alert.alert('Success', 'You have signed up successfully');
-                navigation.navigate('Signin'); // Navigate to Signin screen
+                navigation.navigate('Signin');
             } else {
                 Alert.alert('Error', data.error || 'Signup failed');
             }
@@ -58,11 +60,39 @@ export default function Signup({ navigation }) {
             } else {
                 Alert.alert('Error', 'Something went wrong. Please try again later.');
             }
-            console.error('Signup failed:', error);
         } finally {
             setLoading(false);
         }
     };
+
+    const showIssueDatePicker = () => {
+        setIssueDatePickerVisibility(true);
+    };
+
+    const hideIssueDatePicker = () => {
+        setIssueDatePickerVisibility(false);
+    };
+
+    const handleIssueDateConfirm = (date) => {
+        const formattedDate = date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+        handleChange('issueDate', formattedDate);
+        hideIssueDatePicker();
+    };
+
+    const showExpiryDatePicker = () => {
+        setExpiryDatePickerVisibility(true);
+    };
+
+    const hideExpiryDatePicker = () => {
+        setExpiryDatePickerVisibility(false);
+    };
+
+    const handleExpiryDateConfirm = (date) => {
+        const formattedDate = date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
+        handleChange('expiryDate', formattedDate);
+        hideExpiryDatePicker();
+    };
+
 
     return (
         <SafeAreaProvider>
@@ -144,15 +174,30 @@ export default function Signup({ navigation }) {
                             label="Issue Date"
                             placeholder="Issue Date"
                             value={formData.issueDate}
-                            onChangeText={(value) => handleChange('issueDate', value)}
-                            type="date"
+                            onTouchStart={showIssueDatePicker}
+                            editable={false} // Prevent manual editing
                         />
+                        <DateTimePickerModal
+                            isVisible={isIssueDatePickerVisible}
+                            mode="date"
+                            maximumDate={new Date()} // Max date is today for issueDate
+                            onConfirm={handleIssueDateConfirm}
+                            onCancel={hideIssueDatePicker}
+                        />
+
                         <Input
                             label="Expiry Date"
                             placeholder="Expiry Date"
                             value={formData.expiryDate}
-                            onChangeText={(value) => handleChange('expiryDate', value)}
-                            type="date"
+                            onTouchStart={showExpiryDatePicker}
+                            editable={false} // Prevent manual editing
+                        />
+                        <DateTimePickerModal
+                            isVisible={isExpiryDatePickerVisible}
+                            mode="date"
+                            minimumDate={new Date()} // Min date is today for expiryDate
+                            onConfirm={handleExpiryDateConfirm}
+                            onCancel={hideExpiryDatePicker}
                         />
 
                         {loading ? (
