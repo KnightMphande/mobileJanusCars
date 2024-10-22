@@ -21,6 +21,8 @@ export default function Signup({ navigation }) {
         zipCode: '',
         country: '',
         licenseNumber: '',
+        issueDate: '',
+        expiryDate: ''
     });
     const [issueDate, setIssueDate] = useState();
     const [expiryDate, setExpiryDate] = useState();
@@ -41,12 +43,14 @@ export default function Signup({ navigation }) {
 
         try {
             const response = await axios.post(
-                'http://10.242.154.96:5000/api/auth/signup', 
+                'http://10.0.0.191:5000/api/auth/signup', 
                 formData,
                 { withCredentials: true }
             );
 
             const data = response.data;
+            console.log(data);
+            
 
             if (data.success) {
                 Alert.alert('Success', 'You have signed up successfully');
@@ -174,31 +178,17 @@ export default function Signup({ navigation }) {
                             label="Issue Date"
                             placeholder="Issue Date"
                             value={formData.issueDate}
-                            onTouchStart={showIssueDatePicker}
-                            editable={false} // Prevent manual editing
+                            onChangeText={(value) => handleChange('issueDate', value)}
                         />
-                        <DateTimePickerModal
-                            isVisible={isIssueDatePickerVisible}
-                            mode="date"
-                            maximumDate={new Date()} // Max date is today for issueDate
-                            onConfirm={handleIssueDateConfirm}
-                            onCancel={hideIssueDatePicker}
-                        />
+
 
                         <Input
                             label="Expiry Date"
                             placeholder="Expiry Date"
                             value={formData.expiryDate}
-                            onTouchStart={showExpiryDatePicker}
-                            editable={false} // Prevent manual editing
+                            onChangeText={(value) => handleChange('expiryDate', value)}
                         />
-                        <DateTimePickerModal
-                            isVisible={isExpiryDatePickerVisible}
-                            mode="date"
-                            minimumDate={new Date()} // Min date is today for expiryDate
-                            onConfirm={handleExpiryDateConfirm}
-                            onCancel={hideExpiryDatePicker}
-                        />
+
 
                         {loading ? (
                             <ActivityIndicator size="large" color="#0000ff" />

@@ -26,7 +26,7 @@ export default function Signin({ navigation }) {
         setLoading(true);
         try {
             const response = await axios.post(
-                'http://10.242.154.96:5000/api/auth/signin', // local ip address
+                'http://10.0.0.191:5000/api/auth/signin', // local ip address
                 { email, password },
                 { withCredentials: true }
             );

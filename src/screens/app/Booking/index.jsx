@@ -30,8 +30,11 @@ export default function Bookings({ navigation }) {
 
   const fetchBookings = async () => {
     try {
-      const response = await axios.get(`http://10.242.154.96:5000/api/booking`);
+      const response = await axios.get(`http://10.0.0.191:5000/api/booking`);
       const data = response.data;
+
+      console.log(data);
+      
       setBookings(data.bookings);
     } catch (error) {
       console.error("Failed to fetch bookings data:", error);
@@ -72,7 +75,7 @@ export default function Bookings({ navigation }) {
       };
 
       const response = await axios.put(
-        `http://10.242.154.96:5000/api/booking/${selectedBooking.booking_id}`,
+        `http://10.0.0.191:5000/api/booking/${selectedBooking.booking_id}`,
         dataToUpdate
       );
 

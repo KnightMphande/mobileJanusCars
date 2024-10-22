@@ -23,7 +23,7 @@ export default function Profile({ navigation }) {
 
     const fetchProfile = async () => {
         try {
-            const response = await axios.get(`http://10.242.154.96:5000/api/profile/${user?.customer_id}`);
+            const response = await axios.get(`http://10.0.0.191:5000/api/profile/${user?.customer_id}`);
             const data = response.data;
             const profileData = data.profile;
 
@@ -47,7 +47,7 @@ export default function Profile({ navigation }) {
     // Cancel Booking
     const cancelBooking = async (id) => {
         try {
-            const response = await fetch(`http://10.242.154.96:5000/api/booking/${id}`, {
+            const response = await fetch(`http://10.0.0.191:5000/api/booking/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export default function Profile({ navigation }) {
     const urlLogo =
         userData?.logo_url === null
             ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s"
-            : `http://10.242.154.96:5000/profile/${user.customer_id}/${user?.logo_url}`;
+            : `http://10.0.0.191:5000/profile/${user.customer_id}/${user?.logo_url}`;
 
     return (
         <View style={styles.container}>
